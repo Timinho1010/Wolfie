@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolf vs Sheep Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Welcome to the Wolf vs Sheep Game!</h1>
+    <button id="startGame">Start Game</button>
+
+    <div id="gameArea" style="display:none;">
+        <h2>Round: <span id="roundNumber">1</span></h2>
+        <div id="playerInfo"></div>
+
+        <label for="vote">Vote for a player to eliminate:</label>
+        <select id="vote">
+            <option value="" disabled selected>Select a player</option>
+        </select>
+        <button id="voteButton">Vote</button>
+
+        <button id="recruitButton" style="display:none;">Recruit a Wolf (if applicable)</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#startGame').click(function() {
+                $.post("/start_game", function(response) {
+                    alert(response.status);
+                    $('#startGame').hide();
+                    $('#gameArea').show();
+                });
+            });
+
+            $('#voteButton').click(function() {
+                var playerVote = $('#vote').val();
+                var player = "Player1"; // Assume current player is Player1 (for testing purposes)
+                $.ajax({
+                    url: '/vote',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({player: player, voted_player: playerVote}),
+                    success: function(response) {
+                        alert(response.status);
+                    }
+                });
+            });
+
+            $('#recruitButton').click(function() {
+                $.post("/recruit", function(response) {
+                    alert(response.status);
+                    $('#recruitButton').hide();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
