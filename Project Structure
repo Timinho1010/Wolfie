@@ -1,0 +1,11 @@
+wolf-sheep-game/
+│
+├── app.py             # Flask backend application
+├── templates/
+│   └── index.html     # HTML frontend
+├── static/
+│   ├── style.css      # CSS for styling
+│   ├── images/
+│   │   ├── wolf.png   # Image of a wolf
+│   │   └── sheep.png  # Image of a sheep
+└── requirements.txt   # Python dependencies
